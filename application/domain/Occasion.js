@@ -1,4 +1,3 @@
-module.export = class Occasion {
-	id;
-	title;
-}
+module.exports = function Occasion() {
+
+};

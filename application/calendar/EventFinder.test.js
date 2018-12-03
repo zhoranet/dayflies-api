@@ -2,13 +2,15 @@ const EventFinder = require('./EventFinder');
 
 occasionRepositoryMock = () => {
 	return {
-		getProjectedDates: jest.fn(() => new Error())
+		getProjectedDates: jest.fn(() => [new Date(2018, 1, 1)])
 	};
-}
+};
 
 eventRepositoryMock = () => {
 	return {
-		getEvents: jest.fn(() => new Error())
+		getEvents: jest.fn(() => {
+			return [{date: new Date(2018, 1, 1), title: 'test'}];
+		})
 	};
 };
 
@@ -20,7 +22,16 @@ describe('EventFinder', () => {
 
 	it('Can find daily events', async () => {
 		const eventFinder = new EventFinder(eventRepositoryMock(), occasionRepositoryMock());
-		const events = await eventFinder.findDailyEvents(new Date(2018, 11, 29));
-		expect(events).toBeDefined();
+		const events = await eventFinder.findEvents(new Date(2018, 1, 1), new Date(2018, 1, 2));
+		expect(events).toHaveLength(1);
+	});
+
+	it('Can get complement dates', async () => {
+		const eventFinder = new EventFinder(eventRepositoryMock(), occasionRepositoryMock());
+		const events = await eventFinder.getComplementDates(new Date(2018, 1, 1), new Date(2018, 1, 5), [
+			new Date(2018, 1, 1),
+			new Date(2018, 1, 2)
+		]);
+		expect(events).toHaveLength(2);
 	});
 });
