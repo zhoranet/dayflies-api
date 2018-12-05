@@ -17,6 +17,8 @@ module.exports = function EventUpdater(eventRepository) {
 			default:
 				break;
 		}
+
+		return schedule;
 	};
 
 	createEvent = async event => {
@@ -26,6 +28,6 @@ module.exports = function EventUpdater(eventRepository) {
 	};
 
 	return {
-		createEvent: async event => await createEvent()
+		createEvent: async event => await createEvent(event)
 	};
 };
