@@ -7,6 +7,8 @@ const occasionsController = require('../controllers/occasions');
 const router = express.Router();
 
 router.get('/events', eventsController.getEvents);
+router.post('/events', eventsController.createEvent);
+
 router.get('/occasions', occasionsController.getOccasions);
 router.post('/occasions', [
 	body('title')
